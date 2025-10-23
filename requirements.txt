@@ -1,0 +1,10 @@
+transformers
+langchain
+langchain-huggingface
+torch 
+torchvision 
+torchaudio
+streamlit
+python-dotenv
+accelerate
+sentencepiece
