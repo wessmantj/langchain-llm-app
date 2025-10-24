@@ -3,6 +3,9 @@ from langchain.prompts import PromptTemplate
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 from dotenv import load_dotenv
 import torch
+from langchain.agents import load_tools
+from langchain.agents import initialize_agent
+from langchain.agents import AgentType
 
 load_dotenv()
 
@@ -100,3 +103,16 @@ Names:
         response = chain.invoke({"animal_type": animal_type})
     
     return response
+
+def langchain_agent():
+    llm = get_llm(use_better_model=True)
+
+    tools = load_tools(["wikipedia", "llm-math"], llm=llm)
+    
+    
+    agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
+
+    result =agent.run(
+        "What is the average age of a dog? Miltiply the result by 3"
+    )
+    print(result)
